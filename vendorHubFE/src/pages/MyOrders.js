@@ -5,11 +5,12 @@ import OrderTracking from '../components/OrderTracking';
 const MyOrders = () => {
     const [orders, setOrders] = useState([]);
     const token = localStorage.getItem('token');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/orders', {
+                const res = await axios.get(backendUrl + '/api/orders', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setOrders(res.data);

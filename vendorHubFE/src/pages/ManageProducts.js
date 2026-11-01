@@ -11,6 +11,7 @@ const ManageProducts = () => {
     const [editFile, setEditFile] = useState(null);
     const [isUpdating, setIsLoading] = useState(false);
     const token = localStorage.getItem('token');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
@@ -18,7 +19,7 @@ const ManageProducts = () => {
     useEffect(() => { if (token) loadItems(); }, [token]);
 
     const loadItems = async () => {
-        const res = await axios.get('http://localhost:5000/api/products');
+        const res = await axios.get(backendUrl + '/api/products');
         setProducts(res.data);
     };
 
@@ -33,7 +34,7 @@ const ManageProducts = () => {
         }
 
         try {
-            await axios.put(`http://localhost:5000/api/products/${id}`, formData, {
+            await axios.put(backendUrl + `/api/products/${id}`, formData, {
                 headers: { 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
@@ -51,7 +52,7 @@ const ManageProducts = () => {
 
     const commitPurge = async (id) => {
         if (!window.confirm("Purge permanently?")) return;
-        await axios.delete(`http://localhost:5000/api/products/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.delete(backendUrl + `/api/products/${id}`, { headers: { Authorization: `Bearer ${token}` } });
         loadItems();
     };
 

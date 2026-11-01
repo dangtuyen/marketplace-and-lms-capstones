@@ -6,7 +6,7 @@ const Products = (props) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 3; 
+    const itemsPerPage = 8; 
     
     const [search, setSearch] = useState('');
     const [minPrice, setMinPrice] = useState('');
@@ -21,6 +21,7 @@ const Products = (props) => {
     });
 
     const token = localStorage.getItem('token');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const fetchProducts = async () => {
         setLoading(true);
@@ -31,7 +32,7 @@ const Products = (props) => {
             if (maxPrice) params.maxPrice = maxPrice;
             if (sort) params.sort = sort;
 
-            const res = await axios.get('http://localhost:5000/api/products', { params });
+            const res = await axios.get(backendUrl + '/api/products', { params });
             setProducts(res.data);
             setCurrentPage(1);
         } catch (err) {
@@ -65,7 +66,7 @@ const Products = (props) => {
         }
 
         try {
-            await axios.post('http://localhost:5000/api/cart', 
+            await axios.post(backendUrl + '/api/cart', 
                 { productId, quantity: 1 }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -100,7 +101,7 @@ const Products = (props) => {
     }
 
     return (
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px', fontFamily: 'sans-serif', backgroundColor: '#f9fafb', minHeight: 'calc(100vh - 90px)', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div style={{ maxWidth: '1500px', margin: '0 auto', padding: '16px', fontFamily: 'sans-serif', backgroundColor: '#eaf2fa', minHeight: 'calc(100vh - 90px)', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             
             <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px', flexShrink: 0 }}>
@@ -170,36 +171,37 @@ const Products = (props) => {
                         No listings found matching search parameters.
                     </div>
                 ) : (
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', flex: 1, alignItems: 'stretch' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', flex: 1, alignItems: 'flex-start' }}>
                         {currentProducts.map((product) => (
-                            <div key={product._id} style={{ flex: '1 1 calc(33.333% - 20px)', minWidth: '250px', maxWidth: '360px', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #f3f4f6', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', height: '400px' }}>
-                                <div onClick={() => navigateToDetail(product._id)} style={{ width: '100%', height: '180px', backgroundColor: '#f3f4f6', borderBottom: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                            <div key={product._id} style={{ flex: '1 1 calc(25% - 16px)', minWidth: '220px', maxWidth: '400px', backgroundColor: '#ffffff', borderRadius: '14px', border: '1px solid #f3f4f6', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', height: '330px' }}>
+                                
+                                <div onClick={() => navigateToDetail(product._id)} style={{ width: '100%', height: '65%', backgroundColor: '#f3f4f6', borderBottom: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, cursor: 'pointer', padding: '8px', boxSizing: 'border-box' }}>
                                     {product.image && !product.image.includes('broken') ? (
-                                        <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                                             onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
+                                        <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                                            onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
                                     ) : null}
                                     <div style={{ display: product.image ? 'none' : 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', color: '#9ca3af', fontFamily: 'monospace', fontSize: '11px' }}>
                                         <span>150 x 150</span>
                                     </div>
                                 </div>
 
-                                <div style={{ padding: '16px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', overflow: 'hidden' }}>
-                                    <div style={{ marginBottom: '12px' }}>
-                                        <h3 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', color: '#111827', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={product.name}>
+                                <div style={{ padding: '12px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', overflow: 'hidden' }}>
+                                    <div style={{ marginBottom: '4px' }}>
+                                        <h3 style={{ margin: '0 0 2px 0', fontSize: '14px', fontWeight: '800', color: '#111827', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={product.name}>
                                             {product.name}
                                         </h3>
-                                        <p style={{ margin: 0, fontSize: '12px', color: '#6b7280', lineHeight: '1.4', overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                                        <p style={{ margin: 0, fontSize: '11px', color: '#6b7280', lineHeight: '1.3', overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                                             {product.description || 'No descriptive features log supplied by owner.'}
                                         </p>
                                     </div>
 
-                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pt: '8px', borderTop: '1px solid #f9fafb', mt: 'auto' }}>
-                                        <span style={{ fontSize: '20px', fontWeight: '900', color: '#2563eb' }}>${product.price}</span>
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f9fafb', paddingTop: '4px', marginTop: 'auto' }}>
+                                        <span style={{ fontSize: '16px', fontWeight: '900', color: '#2563eb' }}>${product.price}</span>
                                         <button 
                                             onClick={() => addToCart(product._id)}
-                                            style={{ border: 'none', backgroundColor: '#2563eb', color: '#ffffff', padding: '8px 14px', borderRadius: '10px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                                            style={{ border: 'none', backgroundColor: '#2563eb', color: '#ffffff', padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
                                         >
-                                            <ShoppingCart size={14} /> Add
+                                            <ShoppingCart size={12} /> Add
                                         </button>
                                     </div>
                                 </div>

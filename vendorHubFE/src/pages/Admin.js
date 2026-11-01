@@ -5,6 +5,7 @@ const Admin = () => {
     const [analytics, setAnalytics] = useState(null);
     const [orders, setOrders] = useState([]);
     const token = localStorage.getItem('token');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         if (token) {
@@ -14,17 +15,17 @@ const Admin = () => {
     }, [token]);
 
     const fetchAnalytics = async () => {
-        const res = await axios.get('http://localhost:5000/api/admin/analytics', { headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get(backendUrl + '/api/admin/analytics', { headers: { Authorization: `Bearer ${token}` } });
         setAnalytics(res.data);
     };
 
     const fetchOrders = async () => {
-        const res = await axios.get('http://localhost:5000/api/orders', { headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get(backendUrl + '/api/orders', { headers: { Authorization: `Bearer ${token}` } });
         setOrders(res.data);
     };
 
     const updateStatus = async (orderId, status) => {
-        await axios.put(`http://localhost:5000/api/orders/${orderId}/status`, { status }, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.put(backendUrl + `/api/orders/${orderId}/status`, { status }, { headers: { Authorization: `Bearer ${token}` } });
         fetchOrders();
         fetchAnalytics();
     };
@@ -32,7 +33,7 @@ const Admin = () => {
     // API call function to automatically open the invoice print tab with Token attached
     const downloadInvoicePDF = (orderId) => {
         const token = localStorage.getItem('token');
-        window.open(`http://localhost:5000/api/orders/${orderId}/invoice?token=${token}`, '_blank');
+        window.open(backendUrl + `/api/orders/${orderId}/invoice?token=${token}`, '_blank');
     };
 
     return (

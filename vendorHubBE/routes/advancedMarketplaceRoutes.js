@@ -104,11 +104,15 @@ router.get('/orders/:orderId/invoice', authMiddleware, async (req, res) => {
             <html>
             <head>
                 <style>
-                    body { font-family: sans-serif; padding: 30px; color: #333; line-height: 1.5; }
+                    @page { 
+                        size: auto;   
+                        margin: 0mm;  
+                    }
+                    body { font-family: sans-serif; padding: 40px; color: #333; line-height: 1.5; background-color: #ffffff; }
                     .header { border-bottom: 2px solid #2563eb; padding-bottom: 20px; margin-bottom: 20px; }
                     .grid { display: flex; justify-content: space-between; margin-bottom: 30px; }
-                    table { w-full; border-collapse: collapse; margin-top: 20px; width: 100%; }
-                    th { bg-color: #f3f4f6; text-align: left; padding: 10px; border: 1px solid #e5e7eb; }
+                    table { border-collapse: collapse; margin-top: 20px; width: 100%; }
+                    th { background-color: #f3f4f6; text-align: left; padding: 10px; border: 1px solid #e5e7eb; }
                     td { padding: 10px; border: 1px solid #e5e7eb; }
                     .total { text-align: right; font-size: 20px; font-weight: bold; margin-top: 20px; color: #2563eb; }
                 </style>
