@@ -5,10 +5,11 @@ export default function SignUp({ setUser, setPage }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('customer');
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    fetch('http://localhost:5000/api/auth/signup', {
+    fetch(backendUrl + '/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password, role })

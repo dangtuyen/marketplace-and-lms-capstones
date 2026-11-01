@@ -22,7 +22,7 @@ function App() {
   };
 
   return (
-    <div style={{ backgroundColor: '#f9fafb', minHeight: '100vh', fontFamily: 'sans-serif', width: '100%' }}>
+    <div style={{ backgroundColor: '#ecf2f8', minHeight: '100vh', fontFamily: 'sans-serif', width: '100%' }}>
       <nav className="navbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 40px', backgroundColor: '#ffffff', borderBottom: '1px solid #e5e7eb', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
         <h2 style={{ margin: 0, fontWeight: '900', color: '#2563eb', cursor: 'pointer', fontSize: '24px', letterSpacing: '-0.025em' }} onClick={() => setPage('products')}>NexMall</h2>
         

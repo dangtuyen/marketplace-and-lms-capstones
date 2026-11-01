@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 export default function Login({ setUser, setPage }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const handleLogin = (e) => {
     e.preventDefault();
-    fetch('http://localhost:5000/api/auth/login', {
+    fetch(backendUrl + '/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })

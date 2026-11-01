@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ShoppingCart, Star, ArrowLeft } from 'lucide-react';
+import { ShoppingCart, CheckCircle, XCircle, Star, ArrowLeft } from 'lucide-react';
 
 const ProductDetail = ({ productId, setPage }) => {
     const [product, setProduct] = useState(null);
@@ -8,22 +8,56 @@ const ProductDetail = ({ productId, setPage }) => {
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(5);
     const token = localStorage.getItem('token');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+    const [alertConfig, setAlertConfig] = useState({
+            isOpen: false,
+            type: 'success',
+            title: '',
+            message: ''
+        });
+
+        const triggerAlert = (type, title, message) => {
+        setAlertConfig({ isOpen: true, type, title, message });
+    };
+
+    const closeAlert = () => {
+        setAlertConfig({ ...alertConfig, isOpen: false });
+    };
+
+    const addToCart = async (productId) => {
+        if (!token) {
+            triggerAlert('error', 'Authentication Required', 'You must log in to an active account before purchasing catalog items.');
+            return;
+        }
+
+        try {
+            await axios.post(backendUrl + '/api/cart', 
+                { productId, quantity: 1 }, 
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            triggerAlert('success', 'Item Added!', 'This product has been added to shopping cart.');
+        } catch (err) {
+            console.error('Redis synchronous push exception caught:', err);
+            triggerAlert('error', 'Process Execution Failure', err.response?.data?.message || 'We could not cache this item state parameter registry row.');
+        }
+    };
 
     useEffect(() => {
         if (productId) {
-            axios.get(`http://localhost:5000/api/products`).then(res => {
+            axios.get(backendUrl + `/api/products`).then(res => {
                 setProduct(res.data.find(p => p._id === productId));
             });
-            axios.get(`http://localhost:5000/api/reviews/${productId}`).then(res => setReviews(res.data));
+            axios.get(backendUrl + `/api/reviews/${productId}`).then(res => setReviews(res.data));
         }
     }, [productId]);
 
     const handleReview = async (e) => {
         e.preventDefault();
         if (!token) return alert('Please log in.');
-        await axios.post('http://localhost:5000/api/reviews', { productId, rating, comment }, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(backendUrl + '/api/reviews', { productId, rating, comment }, { headers: { Authorization: `Bearer ${token}` } });
         setComment('');
-        axios.get(`http://localhost:5000/api/reviews/${productId}`).then(res => setReviews(res.data));
+        axios.get(backendUrl + `/api/reviews/${productId}`).then(res => setReviews(res.data));
     };
 
     if (!product) return <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>Loading item details...</div>;
@@ -35,12 +69,12 @@ const ProductDetail = ({ productId, setPage }) => {
             <div style={{ display: 'flex', gap: '20px', flex: 1, overflow: 'hidden', alignItems: 'stretch' }}>
                 <div style={{ flex: '1', backgroundColor: '#ffffff', borderRadius: '12px', border: '1px solid #e5e7eb', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
                     <div>
-                        <div style={{ width: '100%', height: '220px', backgroundColor: '#f3f4f6', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', overflow: 'hidden' }}>
+                        <div style={{ width: '100%', height: '350px', backgroundColor: '#f3f4f6', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', overflow: 'hidden', padding: '12px', boxSizing: 'border-box' }}>
                             {product.image && !product.image.includes('broken') ? (
                                 <img 
                                     src={product.image} 
                                     alt={product.name} 
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
                                     onError={(e) => { 
                                         e.target.style.display = 'none'; 
                                         if (e.target.nextSibling) e.target.nextSibling.style.display = 'block';
@@ -61,7 +95,7 @@ const ProductDetail = ({ productId, setPage }) => {
                         <div style={{ fontSize: '24px', fontWeight: '900', color: '#2563eb', marginBottom: '12px' }}>${product.price}</div>
                         <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>{product.description || 'No description listed.'}</p>
                     </div>
-                    <button onClick={async () => { await axios.post('http://localhost:5000/api/cart', { productId, quantity: 1 }, { headers: { Authorization: `Bearer ${token}` } }); alert('Added!'); }} style={{ width: '100%', border: 'none', backgroundColor: '#2563eb', color: '#ffffff', fontWeight: '700', padding: '14px', borderRadius: '8px', cursor: 'pointer', marginTop: '16px' }}><ShoppingCart size={14}/> Add to Cart</button>
+                    <button onClick={() => addToCart(productId)} style={{ width: '100%', border: 'none', backgroundColor: '#2563eb', color: '#ffffff', fontWeight: '700', padding: '14px', borderRadius: '8px', cursor: 'pointer', marginTop: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}><ShoppingCart size={14}/> Add to Cart</button>
                 </div>
 
                 <div style={{ flex: '1.2', backgroundColor: '#ffffff', borderRadius: '12px', border: '1px solid #e5e7eb', padding: '20px', display: 'flex', flexDirection: 'column', overflow: 'hidden', boxSizing: 'border-box' }}>
@@ -92,6 +126,23 @@ const ProductDetail = ({ productId, setPage }) => {
                     </form>
                 </div>
             </div>
+
+            {/* Alerts Modal System */}
+            {alertConfig.isOpen && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+                    <div style={{ backgroundColor: '#ffffff', borderRadius: '20px', padding: '24px', maxWidth: '350px', width: '100%', textAlign: 'center', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
+                        {alertConfig.type === 'success' ? (
+                            <div style={{ color: '#22c55e', backgroundColor: '#f0fdf4', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}><CheckCircle size={28} /></div>
+                        ) : (
+                            <div style={{ color: '#ef4444', backgroundColor: '#fef2f2', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}><XCircle size={28} /></div>
+                        )}
+                        <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#111827', margin: '0 0 6px 0' }}>{alertConfig.title}</h3>
+                        <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 16px 0', lineHeight: '1.4' }}>{alertConfig.message}</p>
+                        <button onClick={closeAlert} style={{ width: '100%', border: 'none', backgroundColor: alertConfig.type === 'success' ? '#22c55e' : '#ef4444', color: '#ffffff', fontWeight: '700', padding: '10px', borderRadius: '8px', cursor: 'pointer', fontSize: '13px' }}>Dismiss</button>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };

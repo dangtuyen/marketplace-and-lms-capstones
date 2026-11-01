@@ -11,6 +11,7 @@ const AddProduct = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [msg, setMsg] = useState('');
     const token = localStorage.getItem('token');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -28,7 +29,7 @@ const AddProduct = () => {
         if (selectedFile) formData.append('image', selectedFile);
 
         try {
-            const res = await axios.post('http://localhost:5000/api/products', formData, {
+            const res = await axios.post(backendUrl + '/api/products', formData, {
                 headers: { 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'

@@ -5,7 +5,8 @@ import { Elements } from '@stripe/react-stripe-js';
 import StripePaymentForm from '../components/StripePaymentForm';
 import { ShoppingBag, Trash2, Plus, Minus, MapPin, CreditCard, Ticket } from 'lucide-react';
 
-const stripePromise = loadStripe('pk_test_51UWZ5wJolwuRp0gzz1OhNuAl6VTtE4kvj0GhUymQux5AqisUFCLwHOXznBv6nyJ1ib1KfBvv0EUA8Y5ggHql1NDC003DC9RW1k');
+const publishableKey = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = loadStripe(publishableKey);
 
 const Cart = () => {
     const [cart, setCart] = useState({ items: [], totalPrice: 0 });
@@ -14,6 +15,7 @@ const Cart = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [stripeClientSecret, setStripeClientSecret] = useState('');
     const token = localStorage.getItem('token');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     // Coupons Integration States
     const [couponCode, setCouponCode] = useState('');
@@ -24,7 +26,7 @@ const Cart = () => {
 
     const fetchCart = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/cart', { headers: { Authorization: `Bearer ${token}` } });
+            const res = await axios.get(backendUrl + '/api/cart', { headers: { Authorization: `Bearer ${token}` } });
             setCart(res.data);
         } catch (err) { console.error(err); }
     };
@@ -32,7 +34,7 @@ const Cart = () => {
     const updateQuantity = async (productId, newQuantity) => {
         if (!token) return;
         try {
-            const res = await axios.post('http://localhost:5000/api/cart', 
+            const res = await axios.post(backendUrl + '/api/cart', 
                 { productId, quantity: newQuantity }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -55,7 +57,7 @@ const Cart = () => {
         setIsLoading(true);
         setMessage('');
         try {
-            const res = await axios.post('http://localhost:5000/api/orders/checkout', 
+            const res = await axios.post(backendUrl + '/api/orders/checkout', 
                 { shippingAddress, finalPrice: finalCalculatedTotalPrice }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -81,7 +83,7 @@ const Cart = () => {
         e.preventDefault();
         if (!couponCode.trim()) return;
         try {
-            const res = await axios.post('http://localhost:5000/api/coupons/validate', 
+            const res = await axios.post(backendUrl + '/api/coupons/validate', 
                 { code: couponCode }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );

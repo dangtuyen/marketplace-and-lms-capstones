@@ -1,5 +1,5 @@
 
-body { margin: 0; font-family: sans-serif; background: #f4f7f6; color: #333; }
+body { margin: 0; font-family: sans-serif; background: #d1dad7; color: #333; }
 .navbar { display: flex; justify-content: space-between; padding: 15px 30px; background: #232f3e; color: white; align-items: center; }
 .navbar a { color: white; text-decoration: none; margin-left: 15px; }
 .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
