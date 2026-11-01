@@ -8,34 +8,44 @@ This document provides a comprehensive overview of the technical system coupling
 
 Below is the clean data lifecycle flow showing how the React Client UI layers communicate simultaneously with the Node.js Express Application Server, the temporary Redis Cart Cache tier, and cloud persistence instances.
 
-+-----------------------------------------------------------------+
-|                    1. React Client UI Frontend                  |
-|                (Full-Width Native Responsive Layouts)          |
-+-----------------------------------------------------------------+
-|                           |                           |
-(Auth / Product CRUD)      (Cart Sync Stream)           (Stripe Handshake)
-|                           |                           |
-v                           v                           v
+```text
+       +-----------------------------------------------------------------+
+
+       |                    1. React Client UI Frontend                  |
+       |                (Full-Width Native Responsive Layouts)          |
+       +-----------------------------------------------------------------+
+
+            |                           |                           |
+    (Auth / Product CRUD)      (Cart Sync Stream)           (Stripe Handshake)
+
+            |                           |                           |
+            v                           v                           v
 +------------------------------------------------------------------------+
+
 |                    2. Node.js Express Back-End API Server              |
 |              [ JWT Authentication & Middleware Control Gates ]         |
 +------------------------------------------------------------------------+
-|                        |                        |
+
+       |                        |                        |
 (Persistent Storage)     (Session Cache Stream)    (Cloud Object Storage API)
-|                        |                        |
-v                        v                        v
+
+       |                        |                        |
+       v                        v                        v
 +--------------+         +--------------+         +----------------------+
+
 |  MongoDB     |         |  Redis       |         |  Supabase Cloud      |
 |  Atlas Core  |         |  Cloud Tier  |         |  Object Storage      |
 |  [Database]  |         |  [Cart Data] |         |  [CDN Assets Bucket] |
 +--------------+         +--------------+         +----------------------+
-|
-| (Connect Account Clearing Transfers)
-v
+       |
+       | (Connect Account Clearing Transfers)
+       v
 +------------------------------------------------------------------------+
+
 |                    3. Stripe Payment Gateway Engine                     |
 |           [ Dynamic Connect Split/Standalone Sandbox Intents ]         |
 +------------------------------------------------------------------------+
+```
 
 ### 🔁 Core Technical Interaction Lifecycles:
 *   **Decentralized Client Viewport Blocks:** Browser components push file images through Multer memory storage buffers directly to public buckets on **Supabase Storage** via the AWS S3 SDK architecture.
