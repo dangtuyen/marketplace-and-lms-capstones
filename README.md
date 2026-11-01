@@ -19,7 +19,8 @@ Welcome to **vendorHub**, a modern, high-performance multi-vendor e-commerce pla
 Ensure you have the following services pre-installed on your development environment setup:
 *   [Node.js (v18+)](https://nodejs.org)
 *   [MongoDB Atlas Account](https://mongodb.com) or a running Local MongoDB instance.
-*   [Redis Server Local Binary Daemon](https://redis.io) active on port `6379`.
+*   [Redis Cloud Account](https://cloud.redis.io) or a running Local Redis instance.
+*   [Stripe Account](https://dashboard.stripe.com)
 
 ---
 
@@ -48,7 +49,7 @@ Ensure you have the following services pre-installed on your development environ
    S3_REGION=ap-southeast-1
 
    # STRIPE TERMINAL ACCESS SCHEMAS
-   STRIPE_SECRET_KEY=sk_test_your_secret_test_key_here
+   STRIPE_SECRET_KEY=your_stripe_api_secret_test_key
    PLATFORM_COMMISSION_FEE=10
    ```
 4. Fire up the development environment cluster connection instance pipelines:
@@ -68,11 +69,16 @@ Ensure you have the following services pre-installed on your development environ
    ```bash
    npm install
    ```
-3. Boot up the local runtime compilation environment server context pipeline:
+3. Initialize a clean configuration environment file named `.env` inside the `vendorHubFE/` directory switches:
+   ```env
+   # STRIPE TERMINAL ACCESS SCHEMAS
+   REACT_APP_STRIPE_PUBLISHABLE_KEY=your_stripe_api_publishable_key
+   ```
+4. Boot up the local runtime compilation environment server context pipeline:
    ```bash
    npm start
    ```
-4. Access the fully responsive viewport layout dashboard using your browser navigation pathways at: `http://localhost:3000`
+5. Access the fully responsive viewport layout dashboard using your browser navigation pathways at: `http://localhost:3000`
 
 ---
 
@@ -81,4 +87,3 @@ Ensure you have the following services pre-installed on your development environ
 1. **Vendor panel access Onboarding Swaps:** Sign up for an account. Update the role parameter metadata string directly to `vendor` or `admin` in MongoDB Atlas collections to unlock layout dashboard manipulation links inside the main navbar.
 2. **Product CRUD Multiplexers:** Go to **Add Product**, select a genuine `.jpg/.png` asset image from your computer storage drives, write your detail descriptions specs, and press upload to verify active stream synchronization to Supabase bucket folders.
 3. **Checkout Validation Pipeline:** Populate items in your Redis shopping basket. Navigate to the Checkout summarize sidebar element, submit target destination credentials, and pass the standard Stripe validation test card string payload `4242 4242 4242 4242` alongside a future expiry data sequence (e.g., `12 / 29`) to complete split payments processing validations safely.
-# nexmall
