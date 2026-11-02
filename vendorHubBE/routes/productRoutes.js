@@ -17,15 +17,28 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
-// GET: Fetch all products with dynamic search text, price filters, and sorting parameters
+// GET: Fetch products dynamically (Public showcase OR filtered by logged-in Vendor ID)
 router.get('/products', async (req, res) => {
     try {
         const { search, minPrice, maxPrice, sort } = req.query;
-        
-        // 1. Construct dynamic MongoDB matching query object
         let queryCondition = {};
 
-        // Text search filter (matches product title or description using case-insensitive regex)
+        const authHeader = req.header('Authorization');
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            try {
+                const token = authHeader.replace('Bearer ', '');
+                const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret_key_here');
+                
+                if (decoded.role === 'vendor') {
+                    queryCondition.vendorId = decoded.id;
+                    console.log(`Isolating product catalog search results to Vendor ID: ${decoded.id}`);
+                }
+            } catch (tokenError) {
+                console.log("Token verification skipped during catalog pull.");
+            }
+        }
+
+        // Apply additional keyword search criteria mappings
         if (search && search.trim() !== '') {
             queryCondition.$or = [
                 { name: { $regex: search.trim(), $options: 'i' } },
@@ -33,19 +46,16 @@ router.get('/products', async (req, res) => {
             ];
         }
 
-        // Numeric price range filters
         if (minPrice || maxPrice) {
             queryCondition.price = {};
             if (minPrice) queryCondition.price.$gte = Number(minPrice);
             if (maxPrice) queryCondition.price.$lte = Number(maxPrice);
         }
 
-        // 2. Define sorting matrix parameters
-        let sortCondition = { createdAt: -1 }; // Default: Newest first
-        if (sort === 'price_asc') sortCondition = { price: 1 };   // Price: Low to High
-        if (sort === 'price_desc') sortCondition = { price: -1 }; // Price: High to Low
+        let sortCondition = { createdAt: -1 };
+        if (sort === 'price_asc') sortCondition = { price: 1 };
+        if (sort === 'price_desc') sortCondition = { price: -1 };
 
-        // 3. Execute search aggregation pipeline query against MongoDB Atlas
         const products = await Product.find(queryCondition).sort(sortCondition);
         return res.json(products);
 
