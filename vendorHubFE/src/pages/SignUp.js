@@ -19,6 +19,7 @@ export default function SignUp({ setUser, setPage }) {
       if(data.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('sessionLoginTime', Date.now().toString());
         setUser(data.user);
         setPage('products');
       }

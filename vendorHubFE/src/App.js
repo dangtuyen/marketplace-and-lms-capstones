@@ -17,9 +17,27 @@ function App() {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('sessionLoginTime');
     setUser(null);
     setPage('products');
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const loginTime = localStorage.getItem('sessionLoginTime');
+    
+    if (token && loginTime) {
+      const currentTime = Date.now();
+      const twoHoursInMilliseconds = 2 * 60 * 60 * 1000; // 2 Hours
+
+      if (currentTime - parseInt(loginTime, 10) > twoHoursInMilliseconds) {
+        console.warn("Session expired due to inactivity. Logging out automatically...");
+        logout();
+      }
+    } else if (token && !loginTime) {
+      localStorage.setItem('sessionLoginTime', Date.now().toString());
+    }
+  }, [page]);
 
   return (
     <div style={{ backgroundColor: '#ecf2f8', minHeight: '100vh', fontFamily: 'sans-serif', width: '100%' }}>
@@ -30,7 +48,7 @@ function App() {
           <button 
             onClick={() => setPage('products')} 
             style={{ cursor: 'pointer', padding: '10px', border: 'none', backgroundColor: page === 'products' ? '#eff6ff' : 'transparent', color: page === 'products' ? '#2563eb' : '#4b5563', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
-            title="View product list"
+            title="View products list"
           >
             <Grid size={22} style={{ strokeWidth: page === 'products' ? '2.5' : '2' }} />
           </button>
@@ -60,7 +78,7 @@ function App() {
             <button 
               onClick={() => setPage('admin')} 
               style={{ cursor: 'pointer', padding: '10px', border: 'none', backgroundColor: page === 'admin' ? '#fef2f2' : 'transparent', color: page === 'admin' ? '#dc2626' : '#4b5563', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              title="Platform administration system"
+              title="Admin dashboard system"
             >
               <ShieldAlert size={22} />
             </button>
@@ -89,8 +107,8 @@ function App() {
           />
         )}
         {page === 'cart' && <Cart user={user} />}
-        {page === 'login' && <Login setUser={setUser} setPage={setPage} />}
-        {page === 'signup' && <SignUp setUser={setUser} setPage={setPage} />}
+        {page === 'login' && <Login setUser={(usr) => { setUser(usr); localStorage.setItem('sessionLoginTime', Date.now().toString()); }} setPage={setPage} />}
+        {page === 'signup' && <SignUp setUser={(usr) => { setUser(usr); localStorage.setItem('sessionLoginTime', Date.now().toString()); }} setPage={setPage} />}
         {page === 'admin' && <Admin />}
         {page === 'add-product' && <AddProduct />}
         {page === 'manage-products' && <ManageProducts />}
