@@ -6,7 +6,7 @@ services:
     name: fs01-nexmall-backend
     runtime: node
     plan: free
-    rootDir: FS-01/backend
+    rootDir: FS-01/vendorHubBE
     buildCommand: npm install
     startCommand: node server.js
     envVars:
@@ -23,7 +23,7 @@ services:
   - type: web
     name: fs01-nexmall-frontend
     runtime: static
-    rootDir: FS-01/frontend
+    rootDir: FS-01/vendorHubFE
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     routes:
