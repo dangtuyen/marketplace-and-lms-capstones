@@ -172,7 +172,7 @@ const Products = (props) => {
                     </div>
                 ) : (
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', flex: 1, alignItems: 'flex-start' }}>
-                        {currentProducts.map((product) => (
+                        {Array.isArray(currentProducts) && currentProducts.map((product) => (
                             <div key={product._id} style={{ flex: '1 1 calc(25% - 16px)', minWidth: '220px', maxWidth: '400px', backgroundColor: '#ffffff', borderRadius: '14px', border: '1px solid #f3f4f6', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box', height: '330px' }}>
                                 
                                 <div onClick={() => navigateToDetail(product._id)} style={{ width: '100%', height: '65%', backgroundColor: '#f3f4f6', borderBottom: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, cursor: 'pointer', padding: '8px', boxSizing: 'border-box' }}>
