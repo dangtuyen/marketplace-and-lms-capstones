@@ -11,7 +11,18 @@ import { Grid, ShoppingBag, ShieldAlert } from 'lucide-react';
 
 function App() {
   const [page, setPage] = useState('products');
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+  const [user, setUser] = useState(() => {
+  try {
+    const savedUser = localStorage.getItem('user');
+    if (!savedUser || savedUser === 'undefined' || savedUser === 'null') {
+      return null;
+    }
+    return JSON.parse(savedUser);
+  } catch (err) {
+    localStorage.removeItem('user');
+    return null;
+  }
+});
   const [selectedProductId, setSelectedProductId] = useState(null);
 
   const logout = () => {
