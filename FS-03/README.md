@@ -96,7 +96,7 @@ Live Classes & Payments
 🚀 Getting Started
 
 
-Prerequisites
+### Prerequisites
 
 Ensure the following services are installed and running on your machine:
 1. Node.js (v18+ recommended)
@@ -106,21 +106,22 @@ Ensure the following services are installed and running on your machine:
 5. LiveKit Server (binary for local WebRTC signaling & media routing)
 6. Docker compose (installed to manage containerized services)
 
-1. Clone the Repository
+
+### 1. Clone the Repository
 ```
 bash
 git clone https://github.com/dangtuyen/marketplace-and-lms-capstones.git
 cd marketplace-and-lms-capstones
 ```
 
-2. Run docker compose
+### 2. Run docker compose
 ```
 bash
 cd FS-03
 docker-compose up -d
 ```
 
-3. Backend Setup
+### 3. Backend Setup
 ```
 bash
 cd FS-03/backend
@@ -146,7 +147,7 @@ npm run dev
 ```
 
 
-4. Configure & Start LiveKit Server (Local WebRTC)
+### 4. Configure & Start LiveKit Server (Local WebRTC)
 Create a livekit.yaml file in the same folder as your livekit-server executable:
 ```
 yaml
@@ -175,7 +176,7 @@ bash
 
 (Note: On Windows, ensure livekit-server.exe is allowed through Windows Defender Firewall on both Private and Public networks so WebRTC media packets are not blocked.)
 
-5. Frontend Setup
+### 5. Frontend Setup
 ```
 bash
 cd FS-03/frontend
