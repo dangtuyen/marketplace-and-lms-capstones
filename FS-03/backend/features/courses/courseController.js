@@ -122,7 +122,7 @@ export const getCourseDetails = async (req, res) => {
   
   let userId = req.user && req.user._id ? req.user._id.toString() : null;
 
-  if (!userId && req.query.userId) {
+  if (!userId && req.query.userId && req.query.userId !== 'undefined' && req.query.userId !== 'null') {
     userId = req.query.userId.toString();
   }
 
@@ -133,22 +133,26 @@ export const getCourseDetails = async (req, res) => {
     let isEnrolled = false;
 
     if (userId && mongoose.Types.ObjectId.isValid(userId) && mongoose.Types.ObjectId.isValid(id)) {
-      const studentObjectId = new mongoose.Types.ObjectId(userId);
-      const courseObjectId = new mongoose.Types.ObjectId(id);
-
-      const enrollmentRecord = await Enrollment.findOne({
-        student: studentObjectId,
-        course: courseObjectId
-      });
-
-      if (enrollmentRecord) {
+      if (course.price === 0) {
         isEnrolled = true;
+      } else {
+        const studentObjectId = new mongoose.Types.ObjectId(userId);
+        const courseObjectId = new mongoose.Types.ObjectId(id);
+
+        const enrollmentRecord = await Enrollment.findOne({
+          student: studentObjectId,
+          course: courseObjectId
+        });
+
+        if (enrollmentRecord) {
+          isEnrolled = true;
+        }
       }
     }
 
     res.status(200).json({
       ...course.toObject(),
-      isEnrolled: isEnrolled || course.price === 0
+      isEnrolled
     });
   } catch (error) {
     res.status(500).json({ message: 'Database validation failure', error: error.message });

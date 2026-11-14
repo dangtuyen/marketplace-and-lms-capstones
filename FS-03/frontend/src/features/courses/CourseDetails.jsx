@@ -192,8 +192,10 @@ export default function CourseDetail() {
             </button>
           )}
 
-          {course.isLive && (course.isEnrolled || isInstructor) && (
-            <button className="btn-live-studio" onClick={() => navigate(`/live/room/${course._id}`)}>🎙️ Join Live WebRTC Class</button> 
+          {token && user && course.isLive && (course.isEnrolled || isInstructor) && (
+            <button className="btn-live-studio" onClick={() => navigate(`/live/room/${course._id}`)}>
+              🎙️ Join Live WebRTC Class
+            </button>
           )}
         </div>
       </div>
@@ -263,7 +265,7 @@ export default function CourseDetail() {
         {/* Left Column: Video Theater & Quiz Module Workspace */}
         <div className="video-theater-container"> 
           
-          {course.isEnrolled || isInstructor ? (
+          {token && user && (course.isEnrolled || isInstructor) ? (
             <>
               {activeLesson ? (
                 <div className="theater-card"> 
@@ -305,7 +307,7 @@ export default function CourseDetail() {
                   }
                 }}
               >
-                Unlock This Course Content Immediately
+                {!token ? 'Sign In to Unlock Course' : 'Unlock This Course Content Immediately'}
               </button>
             </div>
           )}
@@ -328,9 +330,9 @@ export default function CourseDetail() {
                   return (
                     <div key={lesson._id}>
                       <div
-                        onClick={() => (course.isEnrolled || isInstructor) && setActiveLesson(lesson)} 
+                        onClick={() => token && user && (course.isEnrolled || isInstructor) && setActiveLesson(lesson)} 
                         className={`syllabus-item ${isSelected ? 'selected' : ''}`}
-                        style={{ opacity: (course.isEnrolled || isInstructor) ? 1 : 0.6, cursor: (course.isEnrolled || isInstructor) ? 'pointer' : 'not-allowed' }}
+                        style={{ opacity: (token && user && (course.isEnrolled || isInstructor)) ? 1 : 0.6, cursor: (token && user && (course.isEnrolled || isInstructor)) ? 'pointer' : 'not-allowed' }}
                       >
                         <span className="syllabus-item-title">{idx + 1}. {lesson.title}</span> 
                         
