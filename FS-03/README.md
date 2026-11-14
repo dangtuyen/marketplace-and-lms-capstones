@@ -36,7 +36,7 @@ Backend
 
 📂 Project Structure
 ```
-LMS_Live_Classes_MERN_Project/
+FS-03/
 ├── backend/
 │   ├── features/
 │   │   ├── auth/          # Registration, login, JWT token generation
@@ -107,7 +107,7 @@ Ensure the following services are installed and running on your machine:
 ```
 bash
 git clone https://github.com
-cd edustream-lms
+cd FS-03
 ```
 
 2. Backend Setup
