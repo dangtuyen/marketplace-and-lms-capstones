@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './CourseDetail.css';
 import { useNotification } from '../../App.jsx';
+import { API_BASE_URL } from '../../config/api';
 
 export default function CheckoutModal({ course, onClose, onPaymentSuccess }) {
   const [cardData, setCardData] = useState({ cardNumber: '', cardExpiry: '', cvv: '' });
@@ -57,7 +58,7 @@ export default function CheckoutModal({ course, onClose, onPaymentSuccess }) {
       return;
     }
     try {
-      const res = await fetch('http://localhost:5000/api/revenue/checkout', {
+      const res = await fetch(`${API_BASE_URL}/api/revenue/checkout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,13 +89,13 @@ export default function CheckoutModal({ course, onClose, onPaymentSuccess }) {
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(15,23,42,0.6)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 3000 }}>
       <div className="auth-card" style={{ maxWidth: '420px', padding: '2rem' }}>
         <div className="auth-header-block" style={{ textAlign: 'left', marginBottom: '1.5rem' }}>
-          <h2 style={{ fontSize: '1.35rem', fontWeight: '800' }}>🔒 Sandbox Secure Checkout</h2>
-          <p style={{ fontSize: '0.85rem' }}>Test Mode Environment. Standard logic applies.</p>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: '800' }}>💳 Course Enrollment & Payment</h2>
+          <p style={{ fontSize: '0.85rem' }}>Complete your tuition payment to unlock all video lessons and assessments</p>
         </div>
 
         <div style={{ padding: '0.85rem', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px', color: '#1e40af', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
           💰 Tuition Fee: <strong>${course.price} USD</strong> for <strong>"{course.title}"</strong>
-          <div style={{ fontSize: '0.75rem', marginTop: '0.25rem', color: '#60a5fa' }}>💡 Hint: Numbers starting with '5000' simulate banks processor decline.</div>
+          <div style={{ fontSize: '0.75rem', marginTop: '0.25rem', color: '#60a5fa' }}>💡 Instant access to all HD video lessons, quizzes, and completion certificate upon payment</div>
         </div>
 
         {error && <div className="auth-error" style={{ fontSize: '0.85rem', padding: '0.5rem' }}>{error}</div>}

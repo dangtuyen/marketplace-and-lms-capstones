@@ -53,12 +53,12 @@ marketplace-and-lms-capstones/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com
+git clone https://github.com/dangtuyen/marketplace-and-lms-capstones.git
 cd marketplace-and-lms-capstones
 
 # 2. Run FS-01 (NexMall)
-cd FS-01/backend && npm install && npm run dev
-cd FS-01/frontend && npm install && npm run dev
+cd FS-01/vendorHubBE && npm install && npm run dev
+cd FS-01/vendorHubFE && npm install && npm start
 
 # 3. Run FS-03 (EduStream LMS)
 cd FS-03/backend && npm install && npm run dev
