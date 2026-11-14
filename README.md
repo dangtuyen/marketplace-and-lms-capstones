@@ -24,7 +24,7 @@ marketplace-and-lms-capstones/
 │   ├── frontend/
 │   │   └── src/features/                    # Auth, Course Catalog, HLS Player, Live Room, Quizzes
 │   ├── tests/
-│   │   └── EduStream_LMS_Test_Results.xlsx  # Complete 20/20 QA Test Execution Report
+│   │   └── EduStream_LMS_Test_Report.docx   # Test Execution Report
 │   ├── screenshots/                         # UI, Live Class, Revenue Chart & PDF Certificate Captures
 │   └── README.md                            # FS-03 Setup & Documentation
 │
