@@ -57,7 +57,9 @@ FS-03/
 │   │   │   └── quizzes/   # Interactive QuizView & PDF certificate download
 │   │   ├── App.jsx        # Global routing, Navbar & NotificationContext provider
 │   │   └── index.css      # Global design tokens, notification banners & responsive grid rules
-
+├── tests/
+│   │── EduStream_LMS_Test_Results.xlsx  # Complete 20/20 QA Test Execution Report
+├── screenshots/                         # UI, Live Class, Revenue Chart & PDF Certificate Captures
 ```
 
 
