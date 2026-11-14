@@ -104,18 +104,26 @@ Ensure the following services are installed and running on your machine:
 3. Redis Server (running on port 6379 for BullMQ queues)
 4. FFmpeg (installed and added to your system PATH)
 5. LiveKit Server (binary for local WebRTC signaling & media routing)
+6. Docker compose (installed to manage containerized services)
 
 1. Clone the Repository
 ```
 bash
-git clone https://github.com
-cd FS-03
+git clone https://github.com/dangtuyen/marketplace-and-lms-capstones.git
+cd marketplace-and-lms-capstones
 ```
 
-2. Backend Setup
+2. Run docker compose
 ```
 bash
-cd backend
+cd FS-03
+docker-compose up -d
+```
+
+3. Backend Setup
+```
+bash
+cd FS-03/backend
 npm install
 ```
 
@@ -138,7 +146,7 @@ npm run dev
 ```
 
 
-3. Configure & Start LiveKit Server (Local WebRTC)
+4. Configure & Start LiveKit Server (Local WebRTC)
 Create a livekit.yaml file in the same folder as your livekit-server executable:
 ```
 yaml
@@ -167,11 +175,23 @@ bash
 
 (Note: On Windows, ensure livekit-server.exe is allowed through Windows Defender Firewall on both Private and Public networks so WebRTC media packets are not blocked.)
 
-4. Frontend Setup
+5. Frontend Setup
 ```
 bash
-cd frontend
+cd FS-03/frontend
 npm install
+```
+
+Create a .env file inside the frontend/ folder:
+```
+env
+VITE_API_URL=http://localhost:5000
+VITE_LIVEKIT_URL=ws://localhost:7880
+```
+
+Start the frontend application:
+```
+bash
 npm run dev
 ```
 

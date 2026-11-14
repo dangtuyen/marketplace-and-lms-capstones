@@ -14,6 +14,11 @@ Welcome to **vendorHub**, a modern, high-performance multi-vendor e-commerce pla
 ---
 
 ## 🏗️ Repository Setup and Local Installation
+Clone the repository
+   ```bash
+   git clone https://github.com/dangtuyen/marketplace-and-lms-capstones.git
+   cd marketplace-and-lms-capstones
+   ```
 
 ### 📋 Prerequisites
 Ensure you have the following services pre-installed on your development environment setup:
@@ -28,7 +33,7 @@ Ensure you have the following services pre-installed on your development environ
 
 1. Move your terminal context window inside the backend module tree wrapper:
    ```bash
-   cd vendorHubBE
+   cd FS-01/vendorHubBE
    ```
 2. Download and map the required dependencies and package binaries:
    ```bash
@@ -37,12 +42,12 @@ Ensure you have the following services pre-installed on your development environ
 3. Initialize a clean configuration environment file named `.env` inside the `vendorHubBE/` directory switches:
    ```env
    PORT=5000
-   MONGODB_URI=your_mongodb_atlas_connection_string_uri
+   MONGODB_URI=your_mongodb.net_atlas_connection_string_uri
    JWT_SECRET=your_secure_jwt_token_secret_hash_key
-   REDIS_URL=redis://127.0.0.1:6379
+   REDIS_URL=your_redis.io_connection_string_uri
 
    # SUPABASE OBJECT STORAGE API CREDENTIALS LAYERS
-   S3_ENDPOINT=https://supabase.co
+   S3_ENDPOINT=your_supabase.co_url
    S3_BUCKET_NAME=vendorhub-bucket
    S3_ACCESS_KEY=your_supabase_s3_access_key_token
    S3_SECRET_KEY=your_supabase_s3_secret_access_token
@@ -63,7 +68,7 @@ Ensure you have the following services pre-installed on your development environ
 
 1. Open a new discrete terminal screen block and head over to the client dashboard asset tree branches:
    ```bash
-   cd vendorHubFE
+   cd FS-01/vendorHubFE
    ```
 2. Pull down the target operational components and vector iconography elements bundles:
    ```bash
