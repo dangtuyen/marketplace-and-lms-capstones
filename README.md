@@ -20,7 +20,6 @@ marketplace-and-lms-capstones/
 │   ├── backend/                    # Node.js, Express, BullMQ, FFmpeg, LiveKit & PDFKit + Tests
 │   ├── frontend/                   # React (Vite) Frontend (HLS Player, WebRTC Stage, Quizzes) + Tests
 │   ├── screenshots/                # Verified UI & Feature Captures
-│   ├── tests/                      # QA & Manual Test Execution Report (.docx)
 │   ├── docker-compose.yml          # Containerized MongoDB, Redis & LiveKit Setup
 │   └── README.md                   # FS-03 Setup, Architecture & Testing Guide
 │
@@ -104,7 +103,7 @@ cd marketplace-and-lms-capstones
 
 | Shopping Cart & Stripe Checkout | Admin Revenue & Order Oversight |
 | :---: | :---: |
-| ![Stripe Checkout](./FS-01/screenshots/05-stripe-checkout.png) | ![Admin Dashboard](./FS-01/screenshots/08-admin-dashboard.png) |
+| ![Stripe Checkout](./FS-01/screenshots/05-stripe-checkout.png) | ![Admin Dashboard](./FS-01/screenshots/09-admin-dashboard.png) |
 
 ### `FS-03`: EduStream LMS
 

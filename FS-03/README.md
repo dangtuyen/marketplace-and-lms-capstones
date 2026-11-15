@@ -63,8 +63,6 @@ FS-03/
 │   │   ├── App.jsx        # Global routing, Navbar & NotificationContext provider
 │   │   └── index.css      # Global design tokens, notification banners & responsive grid rules
 │   └── tests/             # Automated Frontend Component Unit Tests (Vitest + RTL)
-├── tests/
-│   └── EduStream_LMS_Test_Report.docx   # Manual & QA Test Execution Report (22 Test Cases)
 └── screenshots/                         # UI, Live Class, Revenue Chart & PDF Certificate Captures
 ```
 
