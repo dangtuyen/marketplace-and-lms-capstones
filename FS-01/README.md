@@ -6,26 +6,51 @@ Welcome to **vendorHub**, a modern, high-performance multi-vendor e-commerce pla
 
 ## ⚡ Architectural Framework Highlights
 
-*   **Redis Session Cart Cache:** Dynamic quantity increment adjustments synchronize directly over low-latency memory caching buckets, completely bypassing database read/write strain.
-*   **Supabase Storage Cluster:** Complete AWS S3 API compatibility allowing instant public assets streaming with automated layout fallbacks via deterministic DiceBear glyphs vector mapping engines.
-*   **Stripe Connect Split Payouts:** Fully automated sandbox platform clearing gateways featuring automatic multi-vendor commission deductions (`automatic_payment_methods` adaptive dynamic configurations ready).
-*   **Forced Viewport Bounds (No-Scroll Page Grid):** Tailored inline grid template structures restricting catalogs list frames to a strict row matrix per layout canvas view step.
+* **Redis Session Cart Cache:** Dynamic quantity increment adjustments synchronize directly over low-latency memory caching buckets, completely bypassing database read/write strain.
+* **Supabase Storage Cluster:** Complete AWS S3 API compatibility allowing instant public assets streaming with automated layout fallbacks via deterministic DiceBear glyphs vector mapping engines.
+* **Stripe Connect Split Payouts:** Fully automated sandbox platform clearing gateways featuring automatic multi-vendor commission deductions (`automatic_payment_methods` adaptive dynamic configurations ready).
+* **Vendor Store Dashboard & Order Fulfillment:** Dedicated vendor workspace displaying gross sales revenue, 90% net payouts, active listings, and real-time order fulfillment controls (`Pack` -> `Ship` -> `Deliver` + PDF Invoice).
+* **Forced Viewport Bounds (No-Scroll Page Grid):** Tailored inline grid template structures restricting catalogs list frames to a strict row matrix per layout canvas view step.
+
+---
+
+## 📂 Project Structure
+
+```text
+FS-01/
+├── vendorHubBE/
+│   ├── controllers/        # Product & business logic controllers
+│   ├── middleware/         # JWT authentication, RBAC & Supabase S3 upload handlers
+│   ├── models/             # MongoDB schemas (User, Product, Order, Coupon)
+│   ├── routes/             # Auth, Products, Cart/Orders (Stripe) & Admin analytics routes
+│   ├── tests/              # Automated Backend Unit & API Tests (node:test + Supertest)
+│   ├── redisClient.js      # Redis Cloud / local cache client
+│   └── server.js           # Express application entry point
+├── vendorHubFE/
+│   ├── src/
+│   │   ├── pages/          # Products, ProductDetail, Cart, Login, SignUp, VendorDashboard, AddProduct, ManageProducts, Admin
+│   │   ├── App.js          # Global state routing, Navbar & 2-hour session timeout guard
+│   │   └── index.css       # Global design tokens & responsive layout rules
+│   └── tests/              # Automated Frontend Component Unit Tests (Jest + React Testing Library)
+└── screenshots/            # Verified UI, Stripe Checkout, Vendor Dashboard & Admin Captures
+```
 
 ---
 
 ## 🏗️ Repository Setup and Local Installation
-Clone the repository
-   ```bash
-   git clone https://github.com/dangtuyen/marketplace-and-lms-capstones.git
-   cd marketplace-and-lms-capstones
-   ```
+
+### Clone the Repository
+```bash
+git clone https://github.com
+cd marketplace-and-lms-capstones
+```
 
 ### 📋 Prerequisites
 Ensure you have the following services pre-installed on your development environment setup:
-*   [Node.js (v18+)](https://nodejs.org)
-*   [MongoDB Atlas Account](https://mongodb.com) or a running Local MongoDB instance.
-*   [Redis Cloud Account](https://cloud.redis.io) or a running Local Redis instance.
-*   [Stripe Account](https://dashboard.stripe.com)
+* [Node.js (v18+)](https://nodejs.org)
+* [MongoDB Atlas Account](https://mongodb.com) or a running Local MongoDB instance.
+* [Redis Cloud Account](https://redis.io) or a running Local Redis instance.
+* [Stripe Account](https://stripe.com)
 
 ---
 
@@ -39,7 +64,7 @@ Ensure you have the following services pre-installed on your development environ
    ```bash
    npm install
    ```
-3. Initialize a clean configuration environment file named `.env` inside the `vendorHubBE/` directory switches:
+3. Initialize a clean configuration environment file named `.env` inside the `vendorHubBE/` directory:
    ```env
    PORT=5000
    MONGODB_URI=your_mongodb.net_atlas_connection_string_uri
@@ -74,9 +99,9 @@ Ensure you have the following services pre-installed on your development environ
    ```bash
    npm install
    ```
-3. Initialize a clean configuration environment file named `.env` inside the `vendorHubFE/` directory switches:
+3. Initialize a clean configuration environment file named `.env` inside the `vendorHubFE/` directory:
    ```env
-   # STRIPE TERMINAL ACCESS SCHEMAS
+   REACT_APP_BACKEND_URL=http://localhost:5000
    REACT_APP_STRIPE_PUBLISHABLE_KEY=your_stripe_api_publishable_key
    ```
 4. Boot up the local runtime compilation environment server context pipeline:
@@ -87,8 +112,29 @@ Ensure you have the following services pre-installed on your development environ
 
 ---
 
+## ✅ Automated Unit & Integration Testing
+
+### 1. Running Backend Unit Tests (`node:test` + `Supertest`)
+Ensure **MongoDB** and **Redis** are running, then execute the backend API test suite from `vendorHubBE/`:
+
+```bash
+cd FS-01/vendorHubBE
+npm test
+```
+
+### 2. Running Frontend Component Tests (`Jest` + `React Testing Library`)
+Execute the frontend component and UI test suite from `vendorHubFE/`:
+
+```bash
+cd FS-01/vendorHubFE
+npm test
+```
+
+---
+
 ## 🎯 Verification Testing Milestones Workflow
 
-1. **Vendor panel access Onboarding Swaps:** Sign up for an account. Update the role parameter metadata string directly to `vendor` or `admin` in MongoDB Atlas collections to unlock layout dashboard manipulation links inside the main navbar.
-2. **Product CRUD Multiplexers:** Go to **Add Product**, select a genuine `.jpg/.png` asset image from your computer storage drives, write your detail descriptions specs, and press upload to verify active stream synchronization to Supabase bucket folders.
-3. **Checkout Validation Pipeline:** Populate items in your Redis shopping basket. Navigate to the Checkout summarize sidebar element, submit target destination credentials, and pass the standard Stripe validation test card string payload `4242 4242 4242 4242` alongside a future expiry data sequence (e.g., `12 / 29`) to complete split payments processing validations safely.
+1. **Vendor Panel Access Onboarding:** Sign up for an account with the `vendor` role (or update the role parameter to `vendor` or `admin` in MongoDB Atlas) to unlock **Dashboard**, **+ Add Product**, and **Manage Product** links inside the main navbar.
+2. **Product CRUD & S3 Storage:** Go to **Add Product**, select a genuine `.jpg/.png` asset image from your computer, enter product details, and submit to verify upload synchronization to Supabase S3 storage.
+3. **Checkout Validation Pipeline:** Add items to your Redis shopping basket, proceed to Checkout, enter a shipping address, and complete payment using the Stripe test card `4242 4242 4242 4242` with any future expiry date (e.g., `12 / 29`).
+4. **Vendor Store Dashboard & Order Fulfillment:** Log in as the vendor, open **Dashboard**, and verify gross sales, 90% net payout calculations, order status transitions (`Pack`, `Ship`, `Deliver`), and PDF invoice generation.

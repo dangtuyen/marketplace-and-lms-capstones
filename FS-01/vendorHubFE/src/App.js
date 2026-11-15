@@ -7,6 +7,7 @@ import Admin from './pages/Admin';
 import AddProduct from './pages/AddProduct';
 import ManageProducts from './pages/ManageProducts';
 import ProductDetail from './pages/ProductDetail';
+import VendorDashboard from './pages/VendorDashboard';
 import { Grid, ShoppingBag, ShieldAlert } from 'lucide-react';
 
 function App() {
@@ -85,6 +86,17 @@ function App() {
             </>
           )}
 
+          {(user?.role === 'vendor') && (
+            <>
+              <button
+                className={`btn nav-dashboard-btn ${page === 'vendor-dashboard' ? 'active' : ''}`}
+                onClick={() => setPage('vendor-dashboard')}
+              >
+                Vendor Dashboard
+              </button>
+            </>
+          )}
+
           {user?.role === 'admin' && (
             <button 
               onClick={() => setPage('admin')} 
@@ -125,6 +137,9 @@ function App() {
         {page === 'manage-products' && <ManageProducts />}
         {page === 'product-detail' && (
           <ProductDetail productId={selectedProductId} setPage={setPage} />
+        )}
+        {page === 'vendor-dashboard' && (user?.role === 'vendor') && (
+          <VendorDashboard user={user} setPage={setPage} />
         )}
       </div>
     </div>

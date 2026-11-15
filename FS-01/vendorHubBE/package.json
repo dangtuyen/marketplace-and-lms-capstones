@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "test": "set NODE_ENV=test&& node --test --test-force-exit tests/*.test.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1161.0",
@@ -17,5 +18,8 @@
     "multer": "^2.5.0",
     "redis": "^6.3.1",
     "stripe": "^23.1.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.2"
   }
 }
