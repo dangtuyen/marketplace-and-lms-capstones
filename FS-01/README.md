@@ -41,7 +41,7 @@ FS-01/
 
 ### Clone the Repository
 ```bash
-git clone https://github.com
+git clone https://github.com/dangtuyen/marketplace-and-lms-capstones.git
 cd marketplace-and-lms-capstones
 ```
 

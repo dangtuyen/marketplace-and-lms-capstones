@@ -45,6 +45,12 @@ marketplace-and-lms-capstones/
 
 ## ⚡ Quick Start & Automated Testing
 
+### Clone the Repository
+```bash
+git clone https://github.com/dangtuyen/marketplace-and-lms-capstones.git
+cd marketplace-and-lms-capstones
+```
+
 ### 1. `FS-01` — vendorHub (NexMall)
 * **Full Documentation:** [`FS-01/README.md`](./FS-01/README.md)
 * **Run Services:**
