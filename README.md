@@ -1,66 +1,122 @@
-# 🚀 Full-Stack MERN Capstone Projects (`FS-01` & `FS-03`)
+# 🚀 Full-Stack Capstone Portfolio: Multi-Vendor Marketplace & Live LMS
 
-This repository contains two complete full-stack web applications built with the **MERN Stack** (MongoDB, Express.js, React, Node.js). Both projects are organized into clear, self-contained subfolders (`FS-01` and `FS-03`) with full source code, automated/manual QA test reports, and application screenshots while preserving complete Git commit history.
+A dual-project full-stack engineering repository featuring two production-grade MERN applications:
+1. **`FS-01` — vendorHub (NexMall):** A multi-vendor e-commerce marketplace with Redis session carts, Supabase S3 object storage, Stripe Connect split payments, and a Vendor Store Dashboard.
+2. **`FS-03` — EduStream LMS:** A live virtual classroom and adaptive Video-on-Demand (VOD) platform with BullMQ/FFmpeg HLS streaming, LiveKit WebRTC video/chat, auto-graded quizzes, and PDF certificates.
 
 ---
 
-## 📂 Project Structure
+## 📂 Repository Overview
 
 ```text
 marketplace-and-lms-capstones/
-├── FS-01/                                   # Capstone 1: NexMall Multi-Vendor Marketplace
-│   ├── backend/                             # Express REST API, Auth, RBAC, Products & Orders
-│   ├── frontend/                            # React Storefront, Cart, Vendor & Admin Dashboards
-│   ├── tests/                               # API & Functional Test Cases / QA Reports
-│   ├── screenshots/                         # UI & Feature Verification Screenshots
-│   └── README.md                            # FS-01 Setup & Documentation
+├── FS-01/                          # Multi-Vendor E-Commerce Marketplace (vendorHub / NexMall)
+│   ├── vendorHubBE/                # Node.js, Express, MongoDB, Redis, Stripe & S3 Backend + Tests
+│   ├── vendorHubFE/                # React Frontend (Storefront, Vendor Dashboard, Cart, Admin) + Tests
+│   ├── screenshots/                # Verified UI & Workflow Captures
+│   └── README.md                   # FS-01 Setup, Architecture & Testing Guide
 │
-├── FS-03/                                   # Capstone 2: EduStream Live Learning & VOD LMS
-│   ├── backend/
-│   │   ├── features/                        # Auth, Courses, LiveKit WebRTC, Quizzes, Revenue
-│   │   ├── middleware/                      # JWT Authentication & Role Authorization
-│   │   ├── workers/                         # BullMQ + FFmpeg Asynchronous HLS Transcoding
-│   │   └── server.js                        # Backend Entry Point
-│   ├── frontend/
-│   │   └── src/features/                    # Auth, Course Catalog, HLS Player, Live Room, Quizzes
-│   ├── tests/
-│   │   └── EduStream_LMS_Test_Results.xlsx  # Complete 20/20 QA Test Execution Report
-│   ├── screenshots/                         # UI, Live Class, Revenue Chart & PDF Certificate Captures
-│   └── README.md                            # FS-03 Setup & Documentation
+├── FS-03/                          # Live Classroom & Adaptive VOD Platform (EduStream LMS)
+│   ├── backend/                    # Node.js, Express, BullMQ, FFmpeg, LiveKit & PDFKit + Tests
+│   ├── frontend/                   # React (Vite) Frontend (HLS Player, WebRTC Stage, Quizzes) + Tests
+│   ├── screenshots/                # Verified UI & Feature Captures
+│   ├── docker-compose.yml          # Containerized MongoDB, Redis & LiveKit Setup
+│   └── README.md                   # FS-03 Setup, Architecture & Testing Guide
 │
-└── README.md                                # Repository Overview & Structure (this file)
+└── README.md                       # Root Repository Documentation (this file)
 ```
 
 ---
 
-## 📦 Subfolder Overview
+## 🧩 Project Comparison & Tech Stack
 
-| Subfolder | Project Name | Key Features | Test & Proof Artifacts |
-| :--- | :--- | :--- | :--- |
-| **`FS-01/`** | **NexMall Marketplace** | Multi-vendor storefront, RBAC (Customer/Vendor/Admin), shopping cart, inventory & order management | `FS-01/tests/` & `FS-01/screenshots/` |
-| **`FS-03/`** | **EduStream LMS** | Adaptive HLS video streaming (FFmpeg + BullMQ), LiveKit WebRTC live classes & chat, auto-graded quizzes, PDF certificates, sandbox payments & revenue ledger | `FS-03/tests/EduStream_LMS_Test_Results.xlsx` & `FS-03/screenshots/` |
-
----
-
-## 📸 Screenshots & Verification
-
-* **`FS-01/screenshots/`** — Contains captures of the NexMall storefront, product catalog, cart checkout, and vendor/admin management dashboards.
-* **`FS-03/screenshots/`** — Contains captures of the EduStream course catalog, HLS video player, WebRTC live classroom with real-time chat, auto-graded quiz results, generated A4 PDF certificate, and instructor revenue ledger.
+| Feature Area | `FS-01` — vendorHub (NexMall) | `FS-03` — EduStream LMS |
+| :--- | :--- | :--- |
+| **Core Domain** | Multi-Vendor E-Commerce Marketplace | Live Virtual Classroom & Adaptive VOD LMS |
+| **Frontend** | React 18 (CRA), Axios, Lucide Icons, Custom CSS | React 18 (Vite 5), React Router v6, `hls.js`, `livekit-client` |
+| **Backend** | Node.js, Express, Mongoose, JWT | Node.js (ESM), Express, Mongoose, JWT, PDFKit |
+| **Database & Cache** | MongoDB Atlas + Redis Cloud (7-Day Session Carts) | MongoDB + Redis (BullMQ Async Video Queue) |
+| **Media & Real-Time** | Supabase Object Storage (AWS S3 SDK) | FFmpeg (`.m3u8` / `.ts` HLS) + LiveKit WebRTC SFU |
+| **Payments & Ledger** | Stripe Connect Split Payouts & HTML Invoices | Self-Contained Sandbox Gateway + Instructor Revenue Ledger |
+| **Automated Tests** | `node:test` + Supertest (BE) / Jest + RTL (FE) | `node:test` + Supertest (BE) / Vitest + RTL (FE) |
 
 ---
 
-## 🛠️ Quick Start
+## ⚡ Quick Start & Automated Testing
 
+### Clone the Repository
 ```bash
-# 1. Clone the repository
 git clone https://github.com/dangtuyen/marketplace-and-lms-capstones.git
 cd marketplace-and-lms-capstones
-
-# 2. Run FS-01 (NexMall)
-cd FS-01/vendorHubBE && npm install && npm run dev
-cd FS-01/vendorHubFE && npm install && npm start
-
-# 3. Run FS-03 (EduStream LMS)
-cd FS-03/backend && npm install && npm run dev
-cd FS-03/frontend && npm install && npm run dev
 ```
+
+### 1. `FS-01` — vendorHub (NexMall)
+* **Full Documentation:** [`FS-01/README.md`](./FS-01/README.md)
+* **Run Services:**
+  ```bash
+  # Backend (Port 5000)
+  cd FS-01/vendorHubBE && npm install && npm run dev
+
+  # Frontend (Port 3000)
+  cd FS-01/vendorHubFE && npm install && npm start
+  ```
+* **Run Automated Unit & API Tests:**
+  ```bash
+  # Backend API Tests
+  cd FS-01/vendorHubBE && npm test
+
+  # Frontend Component Tests
+  cd FS-01/vendorHubFE && npm test
+  ```
+
+### 2. `FS-03` — EduStream LMS
+* **Full Documentation:** [`FS-03/README.md`](./FS-03/README.md)
+* **Run Services:**
+  ```bash
+  # Start MongoDB, Redis & LiveKit via Docker
+  cd FS-03 && docker-compose up -d
+
+  # Backend (Port 5000)
+  cd FS-03/backend && npm install && npm run dev
+
+  # Frontend (Port 5173)
+  cd FS-03/frontend && npm install && npm run dev
+  ```
+* **Run Automated Unit & API Tests:**
+  ```bash
+  # Backend API Tests
+  cd FS-03/backend && npm test
+
+  # Frontend Component Tests
+  cd FS-03/frontend && npm test
+  ```
+
+---
+
+## 📸 Visual Walkthrough
+
+### `FS-01`: vendorHub Marketplace
+
+| Storefront Catalog | Vendor Store Dashboard |
+| :---: | :---: |
+| ![Storefront Catalog](./FS-01/screenshots/01-storefront-catalog.png) | ![Vendor Dashboard](./FS-01/screenshots/07-vendor-dashboard.png) |
+
+| Shopping Cart & Stripe Checkout | Admin Revenue & Order Oversight |
+| :---: | :---: |
+| ![Stripe Checkout](./FS-01/screenshots/05-stripe-checkout.png) | ![Admin Dashboard](./FS-01/screenshots/09-admin-dashboard.png) |
+
+### `FS-03`: EduStream LMS
+
+| Course Catalog | Adaptive HLS Video Player |
+| :---: | :---: |
+| ![Course Catalog](./FS-03/screenshots/01-course-catalog.png) | ![HLS Video Player](./FS-03/screenshots/04-hls-video-player.png) |
+
+| Live WebRTC Classroom & Chat | Instructor Revenue Ledger |
+| :---: | :---: |
+| ![Live Classroom](./FS-03/screenshots/05-live-webrtc-classroom.png) | ![Revenue Dashboard](./FS-03/screenshots/09-instructor-revenue-dashboard.png) |
+
+---
+
+## 📄 License
+
+This repository is licensed under the [MIT License](LICENSE).

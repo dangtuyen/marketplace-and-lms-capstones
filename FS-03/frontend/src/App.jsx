@@ -24,6 +24,14 @@ function parseJwt(token) {
       window.atob(base64).split('').map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')
     );
     const decoded = JSON.parse(jsonPayload);
+
+    // Automatically log out if the 2-hour expiration timestamp has passed
+    if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      return null;
+    }
+
     if (decoded.user && !decoded.role) {
       decoded.role = decoded.user.role;
       decoded.name = decoded.user.name;

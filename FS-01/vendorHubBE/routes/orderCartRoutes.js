@@ -192,12 +192,25 @@ router.post('/orders/checkout', authMiddleware, async (req, res) => {
     }
 });
 
-// Fetch historical order status collections for user profiles, or fetch total application volume datasets if requested by Admin
+// Fetch historical order status collections for Customer, Vendor (store sales), or Admin
 router.get('/orders', authMiddleware, async (req, res) => {
     try {
         let orders;
         if (req.user.role === 'admin') {
-            orders = await Order.find().populate('customerId', 'name email').sort({ createdAt: -1 });
+            orders = await Order.find()
+                .populate('customerId', 'name email')
+                .sort({ createdAt: -1 });
+        } else if (req.user.role === 'vendor') {
+            // Find all products belonging to this vendor
+            const vendorProducts = await Product.find({ vendorId: req.user.id }).select('_id');
+            const vendorProductIds = vendorProducts.map((p) => p._id.toString());
+
+            // Find all orders that contain any of this vendor's product IDs
+            orders = await Order.find({
+                'items.productId': { $in: vendorProductIds }
+            })
+                .populate('customerId', 'name email')
+                .sort({ createdAt: -1 });
         } else {
             orders = await Order.find({ customerId: req.user.id }).sort({ createdAt: -1 });
         }

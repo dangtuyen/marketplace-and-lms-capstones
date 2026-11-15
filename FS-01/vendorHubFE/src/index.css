@@ -10,3 +10,24 @@ body { margin: 0; font-family: sans-serif; background: #d1dad7; color: #333; }
 .form-group label { display: block; margin-bottom: 5px; }
 .form-group input, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
 @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+.nav-dashboard-btn {
+  cursor: pointer;
+  padding: 8px 14px;
+  border: 1px solid #bfdbfe;
+  background-color: #eff6ff;
+  color: #2563eb;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.nav-dashboard-btn:hover {
+  background-color: #dbeafe;
+}
+
+.nav-dashboard-btn.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
