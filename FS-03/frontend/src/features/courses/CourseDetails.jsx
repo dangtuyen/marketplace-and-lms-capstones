@@ -7,17 +7,30 @@ import CheckoutModal from './CheckoutModal.jsx';
 import './CourseDetail.css'; 
 import { API_BASE_URL } from '../../config/api';
 
-function parseJwt(token) { 
+function parseJwt(token) {
   try {
-    const base64Url = token.split('.')[1]; 
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); 
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(
       window.atob(base64).split('').map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')
-    ); 
-    const decoded = JSON.parse(jsonPayload); 
-    if (decoded.user && !decoded.role) { decoded.role = decoded.user.role; decoded.name = decoded.user.name; } 
-    return decoded; 
-  } catch (e) { return null; }
+    );
+    const decoded = JSON.parse(jsonPayload);
+
+    // Automatically log out if the 2-hour expiration timestamp has passed
+    if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      return null;
+    }
+
+    if (decoded.user && !decoded.role) {
+      decoded.role = decoded.user.role;
+      decoded.name = decoded.user.name;
+    }
+    return decoded;
+  } catch (e) {
+    return null;
+  }
 }
 
 export default function CourseDetail() { 
