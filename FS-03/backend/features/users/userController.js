@@ -1,5 +1,5 @@
-const User = require('./userModel');
-const jwt = require('jsonwebtoken');
+import User from './userModel.js';
+import jwt from 'jsonwebtoken';
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -14,7 +14,7 @@ const generateToken = (user) => {
   );
 };
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
     const userExists = await User.findOne({ email });
@@ -28,7 +28,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
