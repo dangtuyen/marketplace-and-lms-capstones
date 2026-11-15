@@ -214,6 +214,12 @@ When testing student course purchases in Test Mode, use the following simulated 
 
 ---
 
+## 🌐 Live Deployments
+
+* **FS-03 (EduStream LMS):** [https://edustream-lms-fe.onrender.com/](https://edustream-lms-fe.onrender.com/)
+
+---
+
 ## 📄 License
 
 This project is open-source and available under the [MIT License](LICENSE).
